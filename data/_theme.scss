@@ -1,1 +1,49 @@
 // override vars for theming here
+
+$font-stack: "Noto Sans JP", Helvetica, "MS Gothic", sans-serif;
+$background: #bbb;
+
+body {
+    margin: 0 5px !important;
+}
+
+main {
+    max-width: 990px;
+}
+
+.hide {
+    display: none !important;
+}
+
+.obj-content p {
+    white-space: pre;
+    text-wrap: pretty;
+}
+
+.activity-og-meta {
+    border: 1px solid black;
+    padding: 8px;
+    background: #cdcdcd;
+}
+
+.activity-bar a {
+    color: #444 !important;
+    .dt-published a {
+        color: #777 !important;
+    }
+}
+
+.ap-object {
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    padding-top: 0px !important;
+    background: #ddd;
+
+    .activity-attachment {
+        margin: 20px 0 20px 0 !important;
+    }
+}
+
+.highlight {
+    background: #282828 !important;
+}

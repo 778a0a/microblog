@@ -1199,10 +1199,14 @@ async def admin_actions_new(
         poll_duration_in_minutes=poll_duration_in_minutes,
         name=name,
     )
-    return RedirectResponse(
-        request.url_for("outbox_by_public_id", public_id=public_id),
-        status_code=302,
-    )
+
+    if in_reply_to is None:
+        return RedirectResponse(request.url_for("index"), status_code=302)
+    else:
+        return RedirectResponse(
+            request.url_for("outbox_by_public_id", public_id=public_id),
+            status_code=302,
+        )
 
 
 @router.post("/actions/vote")

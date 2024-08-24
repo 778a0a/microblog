@@ -3,8 +3,8 @@
 <div class="h-card p-author">
 <data class="u-photo" value="{{ local_actor.icon_url }}"></data>
 <a href="{{ local_actor.url }}" class="u-url u-uid no-hover title">
-	<span class="name">{{ local_actor.name }}</span>
-	<span class="p-name handle">{{ local_actor.handle }}</span>
+	<span class="name">{{ local_actor.name }}</span>'s microblog
+	<span class="hide p-name handle">{{ local_actor.handle }}</span>
 </a>
 
 <div class="p-note summary">
@@ -34,6 +34,7 @@
 <a href="{{ navbar_item[0] }}" {% if BASE_URL + request.url.path == url_for %}class="active"{% endif %}>{{ navbar_item[1] }}</a>
 {% endmacro %}
 
+{% if False %}
 <div class="public-top-menu">
 <nav class="flexbox">
     <ul>
@@ -57,6 +58,7 @@
     </ul>
 </nav>
 </div>
+{% endif %}
 
 
 </header>

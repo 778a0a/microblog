@@ -351,6 +351,13 @@ def _timeago(original_dt: datetime) -> str:
     return humanize.naturaltime(dt, when=now().replace(tzinfo=None))
 
 
+from datetime import timedelta
+def _timejst(original_dt: datetime) -> str:
+    dt = original_dt
+    dt = dt + timedelta(hours=9)
+    return dt.strftime('%Y-%m-%d %H:%M')
+
+
 def _has_media_type(attachment: Attachment, media_type_prefix: str) -> bool:
     if attachment.media_type:
         return attachment.media_type.startswith(media_type_prefix)
@@ -422,6 +429,7 @@ _templates.env.filters["media_proxy_url"] = _media_proxy_url
 _templates.env.filters["clean_html"] = _clean_html
 _templates.env.filters["clean_html_wm"] = _clean_html_wm
 _templates.env.filters["timeago"] = _timeago
+_templates.env.filters["timejst"] = _timejst
 _templates.env.filters["format_date"] = _format_date
 _templates.env.filters["has_media_type"] = _has_media_type
 _templates.env.filters["html2text"] = _html2text

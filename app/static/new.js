@@ -54,3 +54,52 @@ files.addEventListener("change", function(e) {
 const end = ta.value.length;
 ta.setSelectionRange(end, end);
 ta.focus();
+
+
+// Ctrl+Vで画像添付
+document.addEventListener('paste', async (event) => {
+    const items = event.clipboardData.items;
+    const fileInput = document.getElementById('files');
+    const dataTransfer = new DataTransfer();
+
+    let previews = document.getElementById("files-preview");
+    if (previews == null) {
+        previews = document.createElement("div");
+        previews.id = "files-preview";
+        previews.style.display = "flex";
+        previews.style.flexWrap = "wrap";
+        previews.style.gap = "5px";
+        fileInput.parentNode.appendChild(previews);
+    }
+
+    for (const existingFile of fileInput.files) {
+        dataTransfer.items.add(existingFile);
+    }
+
+    var added = false;
+    for (const item of items) {
+        if (item.type.startsWith('image/')) {
+            const file = item.getAsFile();
+            if (!file) continue;
+            added = true;
+
+            dataTransfer.items.add(file);
+
+            const preview = document.createElement('img');
+            preview.style.maxWidth = '200px';
+            preview.style.maxHeight = '200px';
+            preview.style.objectFit = 'contain';
+            preview.style.margin = "2px";
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.src = e.target.result;
+                previews.appendChild(preview);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    if (added) {
+        fileInput.files = dataTransfer.files;
+    }
+});

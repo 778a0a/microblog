@@ -6,3 +6,8 @@ docs/dist/
 requirements.txt
 app/_version.py
 app/static/favicon.ico
+incoming_worker.log
+outgoing_worker.log
+supervisord.log
+supervisord.pid
+uvicorn.log
