@@ -28,9 +28,9 @@ main {
 
 .activity-bar a {
     color: #444 !important;
-    .dt-published a {
-        color: #777 !important;
-    }
+}
+.activity-bar .dt-published a {
+    color: #777 !important;
 }
 
 .ap-object {
