@@ -355,7 +355,7 @@ from datetime import timedelta
 def _timejst(original_dt: datetime) -> str:
     dt = original_dt
     dt = dt + timedelta(hours=9)
-    return dt.strftime('%Y-%m-%d %H:%M')
+    return dt.strftime('%Y-%m-%d (%a) %H:%M')
 
 
 def _has_media_type(attachment: Attachment, media_type_prefix: str) -> bool:
