@@ -103,3 +103,11 @@ document.addEventListener('paste', async (event) => {
         fileInput.files = dataTransfer.files;
     }
 });
+
+// Ctrl+Enterで投稿
+document.querySelector("textarea[name='content']").addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.key === 'Enter') {
+        event.preventDefault();
+        document.querySelector('.admin-new').submit();
+    }
+});
