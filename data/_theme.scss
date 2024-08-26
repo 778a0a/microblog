@@ -8,7 +8,20 @@ body {
 }
 
 main {
-    max-width: 990px;
+    max-width: 42em !important;
+    margin: 30px auto 0 auto !important;
+}
+
+footer {
+    max-width: 42em !important;
+}
+
+#admin nav {
+    font-size: 18px;
+}
+
+#admin .admin-menu {
+    margin-bottom: 15px !important;
 }
 
 .p-note.summary p {
