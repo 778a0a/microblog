@@ -1,6 +1,6 @@
 // override vars for theming here
 
-$font-stack: "Noto Sans JP", Helvetica, "MS Gothic", sans-serif;
+$font-stack: "Noto Sans JP", sans-serif;
 $background: #bbb;
 
 body {
@@ -11,13 +11,17 @@ main {
     max-width: 990px;
 }
 
+.p-note.summary p {
+    margin-top: 5px;
+}
+
 .hide {
     display: none !important;
 }
 
 .obj-content p {
     white-space: pre;
-    text-wrap: pretty;
+    text-wrap: wrap;
 }
 
 .activity-og-meta {
