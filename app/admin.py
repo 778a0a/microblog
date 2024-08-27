@@ -1272,7 +1272,8 @@ async def login_validation(
     resp = RedirectResponse(
         redirect or request.url_for("admin_stream"), status_code=302
     )
-    resp.set_cookie("session", session_serializer.dumps({"is_logged_in": True}))  # type: ignore  # noqa: E501
+    max_age = 604800 # 1 week
+    resp.set_cookie("session", session_serializer.dumps({"is_logged_in": True}), max_age=max_age)  # type: ignore  # noqa: E501
 
     return resp
 
