@@ -550,7 +550,7 @@
         </a></p>
     {% endif %}
 
-    {% if is_article_mode %}
+    {% if object.ap_type == "Article" %}
         <time class="dt-published muted article-top-date" datetime="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}" title="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}">
             <a href="{{ object.url }}"{% if object.is_from_inbox %} rel="nofollow"{% endif %} class="object-permalink u-url u-uid">{{ object.ap_published_at | datejst }}</a>
         </time>
