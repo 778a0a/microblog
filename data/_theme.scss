@@ -60,6 +60,18 @@ footer {
     .activity-attachment {
         margin: 20px 0 20px 0 !important;
     }
+
+    .article-top-date {
+        display: block;
+        margin-top: 10px;
+
+        a {
+            color: #555;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
 .highlight {
@@ -71,4 +83,8 @@ code {
     border: 1px solid #bbb;
     border-radius: 5px;
     padding: 0 3px;
+}
+
+.article-title {
+    margin-top: 10px;
 }

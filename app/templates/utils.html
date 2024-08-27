@@ -550,8 +550,14 @@
         </a></p>
     {% endif %}
 
+    {% if is_article_mode %}
+        <time class="dt-published muted article-top-date" datetime="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}" title="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}">
+            <a href="{{ object.url }}"{% if object.is_from_inbox %} rel="nofollow"{% endif %} class="object-permalink u-url u-uid">{{ object.ap_published_at | datejst }}</a>
+        </time>
+    {% endif %}
+
     {% if object.ap_type in ["Article", "Event"] %}
-        <h2 class="p-name no-margin-top">{{ object.name }}</h2>
+        <h2 class="p-name article-title">{{ object.name }}</h2>
     {% endif %}
 
     {% if object.ap_type == "Event" %}
@@ -574,10 +580,6 @@
             </span>
         </div>
         {% endif %}
-    {% endif %}
-
-    {% if is_article_mode %}
-                <time class="dt-published muted" datetime="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}" title="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}">{{ object.ap_published_at.strftime("%b %d, %Y") }}</time>
     {% endif %}
 
     {% if object.summary %}
@@ -659,17 +661,11 @@
 
     <nav class="flexbox activity-bar">
     <ul>
-        {% if not is_article_mode %}
-            <li>
-                <time class="dt-published" datetime="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}" title="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}">
-                    <a href="{{ object.url }}"{% if object.is_from_inbox %} rel="nofollow"{% endif %} class="object-permalink u-url u-uid">{{ object.ap_published_at | timejst }}</a>
-                </time>
-            </li>
-        {% else %}
         <li>
-            <div><a href="{{ object.url }}"{% if object.is_from_inbox %} rel="nofollow"{% endif %} class="object-permalink u-url u-uid">permalink</a></div>
+            <time class="dt-published" datetime="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}" title="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}">
+                <a href="{{ object.url }}"{% if object.is_from_inbox %} rel="nofollow"{% endif %} class="object-permalink u-url u-uid">{{ object.ap_published_at | timejst }}</a>
+            </time>
         </li>
-        {% endif %}
 
         {% if object.is_from_outbox and is_object_page and not is_admin and not request.url.path.startswith("/remote_interaction") %}
             <li>

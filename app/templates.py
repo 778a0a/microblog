@@ -357,6 +357,11 @@ def _timejst(original_dt: datetime) -> str:
     dt = dt + timedelta(hours=9)
     return dt.strftime('%Y-%m-%d (%a) %H:%M')
 
+def _datejst(original_dt: datetime) -> str:
+    dt = original_dt
+    dt = dt + timedelta(hours=9)
+    return dt.strftime('%Y-%m-%d')
+
 
 def _has_media_type(attachment: Attachment, media_type_prefix: str) -> bool:
     if attachment.media_type:
@@ -430,6 +435,7 @@ _templates.env.filters["clean_html"] = _clean_html
 _templates.env.filters["clean_html_wm"] = _clean_html_wm
 _templates.env.filters["timeago"] = _timeago
 _templates.env.filters["timejst"] = _timejst
+_templates.env.filters["datejst"] = _datejst
 _templates.env.filters["format_date"] = _format_date
 _templates.env.filters["has_media_type"] = _has_media_type
 _templates.env.filters["html2text"] = _html2text
