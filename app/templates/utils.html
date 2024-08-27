@@ -143,6 +143,15 @@
 {% endblock %}
 {% endmacro %}
 
+{% macro admin_edit_button(ap_object) %}
+{% block admin_edit_button scoped %}
+<form action="{{ request.url_for("admin_edit_text", public_id=ap_object.public_id) }}" class="object-edit-form" method="GET">
+    {{ embed_csrf_token() }}
+    <input type="submit" value="edit">
+</form>
+{% endblock %}
+{% endmacro %}
+
 {% macro admin_delete_button(ap_object) %}
 {% block admin_delete_button scoped %}
 <form action="{{ request.url_for("admin_actions_delete") }}" class="object-delete-form" method="POST">
@@ -729,6 +738,9 @@
     <nav class="flexbox activity-bar">
     <ul>
         {% if object.is_from_outbox %}
+            <li>
+                {{ admin_edit_button(object) }}
+            </li>
             <li>
                 {{ admin_delete_button(object) }}
             </li>

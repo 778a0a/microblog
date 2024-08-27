@@ -826,6 +826,7 @@ async def send_update(
     db_session: AsyncSession,
     ap_id: str,
     source: str,
+    name: str | None = None,
 ) -> str:
     outbox_object = await get_outbox_object_by_ap_id(db_session, ap_id)
     if not outbox_object:
@@ -865,6 +866,8 @@ async def send_update(
         "attachment": outbox_object.ap_object["attachment"],
         "updated": updated,
     }
+    if outbox_object.ap_type == "Article" and name:
+        note["name"] = name
 
     outbox_object.ap_object = note
     outbox_object.source = source
