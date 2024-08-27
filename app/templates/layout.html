@@ -13,7 +13,7 @@
 {% block head %}{% endblock %}
 </head>
 <body>
-<div id="main">
+<div id="main" {% if is_admin %}class="is-admin"{% endif %} >
 <main{%- block main_tag %}{%- endblock %}>
 {% if is_admin %}
 <div id="admin">

@@ -9,7 +9,17 @@ body {
 
 main {
     max-width: 42em !important;
-    margin: 30px auto 0 auto !important;
+    margin: 0px auto !important;
+}
+
+.top-links {
+    text-align: right;
+    font-size: 14px;
+    margin-right: -20px;
+    height: 30px;
+}
+.is-admin .top-links {
+    float: right;
 }
 
 footer {
@@ -18,7 +28,6 @@ footer {
 
 #admin nav {
     font-size: 18px;
-    margin-top: -20px;
 }
 
 // #admin .admin-menu {
