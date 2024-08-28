@@ -28,7 +28,11 @@
     {% endfor %}
     {% endif %}
 
-    <textarea name="content" rows="10" cols="50" autofocus="autofocus" designMode="on" placeholder="">{{ content }}</textarea>
+    {% set cols = content.splitlines() | length + 5 %}
+    {% if cols > 30 %}
+    {% set cols = 30 %}
+    {% endif %}
+    <textarea name="content" rows="{{ cols }}" cols="50" autofocus="autofocus" designMode="on" placeholder="">{{ content }}</textarea>
 
     {% if False %}
     <p>
