@@ -34,22 +34,24 @@ for (var i = 0; i < items.length; i++) {
 // Add new input text dynamically to allow setting an alt text on attachments
 var files = document.getElementById("files");
 var alts = document.getElementById("alts");
-files.addEventListener("change", function(e) {
-    // Reset the div content
-    alts.innerHTML = "";
-
-    // Add an input for each files
-    for (var i = 0; i < e.target.files.length; i++) {
-        var p = document.createElement("p");
-        var altInput = document.createElement("input");
-        altInput.setAttribute("type", "text");
-        altInput.setAttribute("name", "alt_" + e.target.files[i].name);
-        altInput.setAttribute("placeholder", "Alt text for " + e.target.files[i].name);
-        altInput.setAttribute("style", "width:95%;")
-        p.appendChild(altInput);
-        alts.appendChild(p);
-    }
-});
+if (files != null) {
+    files.addEventListener("change", function(e) {
+        // Reset the div content
+        alts.innerHTML = "";
+    
+        // Add an input for each files
+        for (var i = 0; i < e.target.files.length; i++) {
+            var p = document.createElement("p");
+            var altInput = document.createElement("input");
+            altInput.setAttribute("type", "text");
+            altInput.setAttribute("name", "alt_" + e.target.files[i].name);
+            altInput.setAttribute("placeholder", "Alt text for " + e.target.files[i].name);
+            altInput.setAttribute("style", "width:95%;")
+            p.appendChild(altInput);
+            alts.appendChild(p);
+        }
+    });
+}
 // Focus at the end of the textarea
 const end = ta.value.length;
 ta.setSelectionRange(end, end);
@@ -105,7 +107,7 @@ document.addEventListener('paste', async (event) => {
 });
 
 // Ctrl+Enterで投稿
-document.querySelector("textarea[name='content']").addEventListener('keydown', function(event) {
+ta.addEventListener('keydown', function(event) {
     if (event.ctrlKey && event.key === 'Enter') {
         event.preventDefault();
         document.querySelector('.admin-new').submit();
