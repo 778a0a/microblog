@@ -731,6 +731,14 @@
         </li>
         {% endif %}
 
+        {% if object.is_from_outbox and not is_object_page and is_admin %}
+        <li>
+            <a class="edit-link" href="{{ request.url_for("admin_edit_text", public_id=object.public_id) }}">
+                edit
+            </a>
+        </li>
+        {% endif %}
+
     </ul>
     </nav>
 

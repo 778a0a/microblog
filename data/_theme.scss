@@ -53,13 +53,6 @@ footer {
     background: #cdcdcd;
 }
 
-.activity-bar a {
-    color: #444 !important;
-}
-.activity-bar .dt-published a {
-    color: #777 !important;
-}
-
 .ap-object {
     border: 1px solid #aaa;
     border-radius: 5px;
@@ -81,6 +74,21 @@ footer {
             }
         }
     }
+
+    .activity-bar a {
+        color: #444 !important;
+    }
+    .activity-bar .dt-published a {
+        color: #777 !important;
+    }
+    .activity-bar a.edit-link {
+        color: transparent !important;
+        &:hover {
+            color: #777 !important;
+        }
+    }
+
+
 }
 
 .highlight {
