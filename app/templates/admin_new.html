@@ -8,7 +8,7 @@
 {% block content %}
 
 {% if in_reply_to_object %}
-<div class="actor-action">In reply to:</div>
+<div class="actor-action actor-action-in-reply-to" style="margin-bottom: 10px;">In reply to:</div>
 {{ utils.display_object(in_reply_to_object) }}
 {% endif %}
 
