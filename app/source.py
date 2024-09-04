@@ -73,7 +73,7 @@ class CustomRenderer(HTMLRenderer):
         self.mentioned_actors = mentioned_actors
 
     def render_auto_link(self, token: AutoLink) -> str:
-        template = '<a href="{target}" rel="noopener">{inner}</a>'
+        template = '<a href="{target}" target="_blank" rel="noopener">{inner}</a>'
         target = self.escape_url(token.target)
         return template.format(target=target, inner=target)
 
@@ -113,7 +113,7 @@ class CustomRenderer(HTMLRenderer):
             pass
 
         code = token.children[0].content
-        return f"<pre><code{lexer_attr}>\n{code}\n</code></pre>"
+        return f"<pre><code{lexer_attr}>{code}</code></pre>"
 
 
 async def _prefetch_mentioned_actors(
