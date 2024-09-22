@@ -30,3 +30,24 @@ for (var i = 0; i < items.length; i++) {
         });
     }
 }
+
+
+const fullscreenContainer = document.getElementById('fullscreenImgContainer');
+if (fullscreenContainer != null) {
+    const images = document.querySelectorAll('.attachment.u-photo');
+    const fullscreenImg = document.getElementById('fullscreenImg');
+    images.forEach(image => {
+        image.addEventListener('click', () => {
+            fullscreenImg.src = image.src;
+            fullscreenContainer.style.display = 'flex';
+        });
+    });
+    fullscreenContainer.addEventListener('click', () => {
+        fullscreenContainer.style.display = 'none';
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            fullscreenContainer.style.display = 'none';
+        }
+    });
+}

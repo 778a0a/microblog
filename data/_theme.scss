@@ -122,3 +122,28 @@ blockquote {
 .actor-action.actor-action-in-reply-to {
     margin-bottom: -10px;
 }
+
+
+.ap-object .activity-attachment img {
+    max-height: 400px;
+    cursor: zoom-in;
+}
+
+
+#fullscreenImgContainer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+    }
+}
