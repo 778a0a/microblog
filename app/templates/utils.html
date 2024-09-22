@@ -463,7 +463,7 @@
     {% if attachment.type == "Image" or (attachment | has_media_type("image")) %}
         {% if attachment.url not in object.inlined_images %}
         {# <a class="media-link" href="{{ attachment.proxied_url }}" target="_blank"> #}
-            <img src="{{ attachment.resized_url or attachment.proxied_url }}"{% if attachment.name %} title="{{ attachment.name }}" alt="{{ attachment.name }}"{% endif %} class="attachment u-photo">
+        <img src="{{ attachment.resized_url or attachment.proxied_url }}"{% if attachment.name %} title="{{ attachment.name }}" alt="{{ attachment.name }}"{% endif %} class="attachment u-photo">
         {# </a> #}
         {% endif %}
     {% elif attachment.type == "Video" or (attachment | has_media_type("video")) %}
@@ -671,7 +671,7 @@
     <nav class="flexbox activity-bar">
     <ul>
         <li>
-            <time class="dt-published" datetime="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}" title="Posted: {% if object.ap_object.updated %}   {% endif %}{{ object.ap_published_at.replace(microsecond=0).isoformat() }}{% if object.ap_object.updated %}&#013;Updated: {{ object.ap_object.updated.replace("Z", "") }}{% endif %}">
+            <time class="dt-published" datetime="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}" title="Posted: {% if object.ap_object.updated %}   {% endif %}{{ object.ap_published_at.replace(microsecond=0) | timejst }}{% if object.ap_object.updated %}&#013;Updated: {{ object.ap_object.updated | strtimejst}}{% endif %}">
                 <a href="{{ object.url }}"{% if object.is_from_inbox %} rel="nofollow"{% endif %} class="object-permalink u-url u-uid">
                     {{ object.ap_published_at | timejst }}
                     {% if object.ap_object.updated %}(edited){% endif %}

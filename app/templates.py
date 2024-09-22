@@ -357,6 +357,10 @@ def _timejst(original_dt: datetime) -> str:
     dt = dt + timedelta(hours=9)
     return dt.strftime('%Y-%m-%d (%a) %H:%M')
 
+def _strtimejst(original_dt: str) -> str:
+    dt = datetime.strptime(original_dt, '%Y-%m-%dT%H:%M:%SZ')
+    return _timejst(dt)
+
 def _datejst(original_dt: datetime) -> str:
     dt = original_dt
     dt = dt + timedelta(hours=9)
@@ -435,6 +439,7 @@ _templates.env.filters["clean_html"] = _clean_html
 _templates.env.filters["clean_html_wm"] = _clean_html_wm
 _templates.env.filters["timeago"] = _timeago
 _templates.env.filters["timejst"] = _timejst
+_templates.env.filters["strtimejst"] = _strtimejst
 _templates.env.filters["datejst"] = _datejst
 _templates.env.filters["format_date"] = _format_date
 _templates.env.filters["has_media_type"] = _has_media_type
