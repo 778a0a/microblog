@@ -59,6 +59,11 @@ footer {
     padding-top: 0px !important;
     background: #ddd;
 
+    .pinned {
+        text-align: right;
+        height: 0;
+    }
+
     .activity-attachment {
         margin: 20px 0 20px 0 !important;
     }
@@ -146,4 +151,9 @@ blockquote {
         max-height: 90%;
         object-fit: contain;
     }
+}
+
+.form input[type=submit]:disabled {
+    background: #1d681d;
+    color: #ccc;
 }

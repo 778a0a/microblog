@@ -542,7 +542,10 @@
 {% set is_article_mode = object.is_from_outbox and object.ap_type == "Article" and is_object_page %}
 {% if object.ap_type in ["Note", "Article", "Video", "Page", "Question", "Event"] %}
 <div class="ap-object {% if expanded %}ap-object-expanded {% endif %}{% if is_h_entry %}h-entry{% endif %}" id="{{ object.permalink_id }}">
-
+    {% if object.is_pinned %}
+    <div class="pinned">📌Pinned</div>
+    {% endif %}
+    
     {% if is_article_mode %}
     <data class="h-card">
         <data class="u-photo" value="{{ local_actor.icon_url }}"></data>
