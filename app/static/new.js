@@ -113,3 +113,30 @@ ta.addEventListener('keydown', function(event) {
         document.querySelector('.admin-new').submit();
     }
 });
+
+const form = document.querySelector(".form.admin-new");
+if (form != null) {
+    let submitting = false;
+    
+    // 二重投稿を防ぐ。
+    form.addEventListener('submit', (event) => {
+        if (submitting) {
+            event.preventDefault();
+            return;
+        }
+        submitting = true;
+        var submitButton = document.querySelector("input[type='submit']");
+        if (submitButton != null) {
+            submitButton.disabled = true;
+            submitButton.value = "Submitting...";
+        }
+    });
+
+    // 編集中にページを離れる際に警告を出す。
+    window.addEventListener('beforeunload', (event) => {
+        if (ta.value.length > 0 && !submitting) {
+            event.preventDefault();
+            event.returnValue = 'Are you sure you want to leave?';
+        }
+    });
+}
