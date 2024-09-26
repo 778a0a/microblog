@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup  # type: ignore
 from loguru import logger
 from pebble import concurrent  # type: ignore
 from pydantic import BaseModel
+import html2text
 
 from app import activitypub as ap
 from app import ap_object
@@ -23,6 +24,8 @@ from app.models import OutboxObject
 from app.utils.url import is_url_valid
 from app.utils.url import make_abs
 
+html_to_text = html2text.HTML2Text(bodywidth=0)
+
 
 class OpenGraphMeta(BaseModel):
     url: str
@@ -30,6 +33,7 @@ class OpenGraphMeta(BaseModel):
     image: str | None
     description: str | None
     site_name: str
+    embedded_html: str | None
 
 
 @concurrent.process(timeout=5)
@@ -42,10 +46,16 @@ def _scrap_og_meta(url: str, html: str) -> OpenGraphMeta | None:
         og.attrs["property"]: og.attrs.get("content")
         for og in soup.html.head.findAll(property=re.compile(r"^og"))
     }
-    # FIXME some page have no <title>
+    
+    title_element = soup.find("title")
+    if title_element:
+        title = title_element.text.strip()
+    else:
+        title = None
+
     raw = {
         "url": url,
-        "title": soup.find("title").text.strip(),
+        "title": title,
         "image": None,
         "description": None,
         "site_name": urlparse(url).hostname,
@@ -75,6 +85,19 @@ def _scrap_og_meta(url: str, html: str) -> OpenGraphMeta | None:
 def scrap_og_meta(url: str, html: str) -> OpenGraphMeta | None:
     return _scrap_og_meta(url, html).result()
 
+
+def scrap_x_oembed(url: str, json: dict[str, Any]) -> OpenGraphMeta | None:
+    soup = BeautifulSoup(json["html"], "html5lib")
+    embedded_html = str(soup)
+    description = html_to_text.handle("\n".join([str(el) for el in soup.find("blockquote").children]))
+    return OpenGraphMeta(
+        url=url,
+        title=json["author_name"],
+        image=None,
+        description=description,
+        site_name=urlparse(url).hostname,
+        embedded_html=embedded_html,
+    )
 
 async def external_urls(
     db_session: AsyncSession,
@@ -130,6 +153,23 @@ async def external_urls(
 
 async def _og_meta_from_url(url: str) -> OpenGraphMeta | None:
     async with httpx.AsyncClient() as client:
+        # twitter.comかx.comの場合は、oEmbed APIを使う。
+        url_obj = urlparse(url)
+        if url_obj.hostname in {"twitter.com", "x.com"}:
+            resp = await client.get("https://publish.twitter.com/oembed", params={
+                "url": url,
+                "omit_script": "true"
+            })
+            resp.raise_for_status()
+            try:
+                return scrap_x_oembed(url, resp.json())
+            except TimeoutError:
+                logger.info(f"[x.com] Timed out when scraping OG meta for {url}")
+                return None
+            except Exception:
+                logger.info(f"[x.com] Failed to scrap OG meta for {url}")
+                return None
+
         resp = await client.get(
             url,
             headers={

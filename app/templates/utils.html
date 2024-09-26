@@ -421,15 +421,24 @@
 {% if object.og_meta %}
 {% for og_meta in object.og_meta[:1] %}
 <div class="activity-og-meta">
-    {% if og_meta.image %}
-    <div>
-        <img src="{{ og_meta.image | media_proxy_url }}">
-    </div>
+    {% if og_meta.site_name %}
+    <div class="activity-og-meta--header">{{ og_meta.site_name }}</div>
     {% endif %}
-    <div>
-        <a href="{{ og_meta.url | privacy_replace_url }}" target="_blank" >{{ og_meta.title }}</a>
-        {% if og_meta.site_name %}
-            <small>{{ og_meta.site_name }}</small>
+    <div class="activity-og-meta--content">
+    {% if og_meta.embedded_html %}
+        {{ og_meta.embedded_html | safe }}
+    {% else %}
+        {% if og_meta.image %}
+            <div class="activity-og-meta--image">
+                <img src="{{ og_meta.image | media_proxy_url }}">
+            </div>
+            {% endif %}
+            <div>
+                <a href="{{ og_meta.url | privacy_replace_url }}" target="_blank" >{{ og_meta.title }}</a>
+                {% if og_meta.description %}
+                <small>{{ og_meta.description }}</small>
+                {% endif %}
+            </div>
         {% endif %}
     </div>
 </div>

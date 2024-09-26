@@ -47,12 +47,6 @@ footer {
     text-wrap: wrap;
 }
 
-.activity-og-meta {
-    border: 1px solid black;
-    padding: 8px;
-    background: #cdcdcd;
-}
-
 .ap-object {
     border: 1px solid #aaa;
     border-radius: 5px;
@@ -156,4 +150,15 @@ blockquote {
 .form input[type=submit]:disabled {
     background: #1d681d;
     color: #ccc;
+}
+
+.twitter-tweet {
+    margin: 0;
+    margin-left: initial !important;
+    border-left: initial !important;
+    padding-left: initial !important;
+
+    p {
+        margin-top: 0;
+    }
 }
