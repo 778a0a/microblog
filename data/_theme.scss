@@ -42,10 +42,16 @@ footer {
     display: none !important;
 }
 
-.obj-content p {
-    white-space: pre;
-    text-wrap: wrap;
+.obj-content {
+    line-height: 32px;
+
+    p {
+        white-space: pre;
+        text-wrap: wrap;
+    }
 }
+
+
 
 .ap-object {
     border: 1px solid #aaa;

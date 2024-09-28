@@ -106,7 +106,7 @@ blockquote {
 body {
   font-family: $font-stack;
   font-size: 20px;
-  line-height: 32px;
+  // line-height: 32px;
   background: $background;
   color: $text-color;
   margin: 0;
@@ -450,7 +450,8 @@ a.label-btn {
 
 .activity-og-meta--header {
   color: #666;
-  font-size: 18px;
+  font-size: 15px;
+  line-height: 25px;
   margin-top: -8px;
 }
 
@@ -460,10 +461,14 @@ a.label-btn {
   background: #888;
 }
 
+.activity-og-meta--detail {
+  margin-top: -10px;
+}
+
 .activity-og-meta--content {
   display: flex;
   column-gap: 20px;
-  img {
+img {
     max-width: 200px;
     max-height: 100px;
   }
