@@ -11,3 +11,4 @@ outgoing_worker.log
 supervisord.log
 supervisord.pid
 uvicorn.log
+logs/
