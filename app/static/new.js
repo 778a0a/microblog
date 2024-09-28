@@ -107,9 +107,11 @@ document.addEventListener('paste', async (event) => {
 });
 
 // Ctrl+Enterで投稿
+let preSubmitting = false;
 ta.addEventListener('keydown', function(event) {
     if (event.ctrlKey && event.key === 'Enter') {
         event.preventDefault();
+        preSubmitting = true;
         document.querySelector('.admin-new').submit();
     }
 });
@@ -128,13 +130,13 @@ if (form != null) {
         var submitButton = document.querySelector("input[type='submit']");
         if (submitButton != null) {
             submitButton.disabled = true;
-            submitButton.value = "Submitting...";
+            submitButton.value = "Publishing...";
         }
     });
 
     // 編集中にページを離れる際に警告を出す。
     window.addEventListener('beforeunload', (event) => {
-        if (ta.value.length > 0 && !submitting) {
+        if (ta.value.length > 0 && !preSubmitting && !submitting) {
             event.preventDefault();
             event.returnValue = 'Are you sure you want to leave?';
         }
