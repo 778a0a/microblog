@@ -5,6 +5,7 @@ from typing import Any
 from typing import Callable
 from urllib.parse import urlparse
 
+import itsdangerous
 import bleach
 import emoji
 import html2text
@@ -72,6 +73,9 @@ def is_current_user_admin(request: Request) -> bool:
                 session_cookie,
                 max_age=SESSION_TIMEOUT,
             )
+        except itsdangerous.exc.SignatureExpired:
+            # セッション切れ時のエラー出力が多くて邪魔だったので抑制します。
+            logger.info("(SignatureExpired)")
         except Exception:
             logger.exception("Failed to validate session timeout")
         else:

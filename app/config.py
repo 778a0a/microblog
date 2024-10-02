@@ -123,7 +123,8 @@ class Config(pydantic.BaseModel):
     sqlalchemy_database: str | None = None
     key_path: str | None = None
 
-    session_timeout: int = 3600 * 24 * 3  # in seconds, 3 days by default
+    # session_timeout: int = 3600 * 24 * 3  # in seconds, 3 days by default
+    session_timeout: int = 3600 * 24 * 7  # 1 week (延長したCookieの有効期限に合わせます)
     csrf_token_exp: int = 3600
 
     disabled_notifications: list[str] = []
