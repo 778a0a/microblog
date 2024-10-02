@@ -462,7 +462,7 @@ a.label-btn {
 }
 
 .activity-og-meta--detail {
-  margin-top: -8px;
+  margin-top: -7px;
 }
 
 .activity-og-meta--content {
@@ -593,4 +593,8 @@ img {
     font-size: 0.8em;
     background: rgba(0,0,0,.5);
     color: #fff;
+}
+
+.emoji {
+  vertical-align: sub;
 }
