@@ -7,6 +7,7 @@ from io import BytesIO
 from typing import Any
 from typing import MutableMapping
 from typing import Type
+import mimetypes
 
 import fastapi
 import httpx
