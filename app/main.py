@@ -1559,7 +1559,7 @@ async def serve_attachment(
     if not path.exists():
         raise HTTPException(status_code=404)
     
-    mime_type, _ = mimetypes.guess_type(filename)[0] or "application/octet-stream"
+    mime_type = mimetypes.guess_type(filename)[0] or "application/octet-stream"
 
     return FileResponse(
         path,
@@ -1591,7 +1591,7 @@ async def serve_attachment_thumbnail(
         raise HTTPException(status_code=404)
 
     path = UPLOAD_DIR / content_hash
-    mime_type, _ = mimetypes.guess_type(filename)[0] or "application/octet-stream"
+    mime_type = mimetypes.guess_type(filename)[0] or "application/octet-stream"
 
     is_webp_supported = "image/webp" in request.headers.get("accept")
     if is_webp_supported:
