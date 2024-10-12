@@ -1538,19 +1538,30 @@ async def serve_attachment(
     filename: str,
     db_session: AsyncSession = Depends(get_db_session),
 ):
-    upload = (
-        await db_session.execute(
-            select(models.Upload).where(
-                models.Upload.content_hash == content_hash,
-            )
-        )
-    ).scalar_one_or_none()
-    if not upload:
+    # 高速化のためにチェックを簡略化します。
+    # upload = (
+    #     await db_session.execute(
+    #         select(models.Upload).where(
+    #             models.Upload.content_hash == content_hash,
+    #         )
+    #     )
+    # ).scalar_one_or_none()
+    # if not upload:
+    #     raise HTTPException(status_code=404)
+    # mime_type = upload.content_type,
+
+    if not content_hash.isalnum():
         raise HTTPException(status_code=404)
+    
+    path = UPLOAD_DIR / content_hash
+    if not path.exists():
+        raise HTTPException(status_code=404)
+    
+    mime_type, _ = mimetypes.guess_type(filename)[0] or "application/octet-stream"
 
     return FileResponse(
-        UPLOAD_DIR / content_hash,
-        media_type=upload.content_type,
+        path,
+        media_type=mime_type,
         headers={"Cache-Control": "max-age=31536000"},
     )
 
@@ -1562,30 +1573,37 @@ async def serve_attachment_thumbnail(
     filename: str,
     db_session: AsyncSession = Depends(get_db_session),
 ):
-    upload = (
-        await db_session.execute(
-            select(models.Upload).where(
-                models.Upload.content_hash == content_hash,
-            )
-        )
-    ).scalar_one_or_none()
-    if not upload or not upload.has_thumbnail:
+    # 高速化のためにチェックを簡略化します。
+    # upload = (
+    #     await db_session.execute(
+    #         select(models.Upload).where(
+    #             models.Upload.content_hash == content_hash,
+    #         )
+    #     )
+    # ).scalar_one_or_none()
+    # if not upload or not upload.has_thumbnail:
+    #     raise HTTPException(status_code=404)
+    # mime_type = upload.content_type,
+
+    if not content_hash.isalnum():
         raise HTTPException(status_code=404)
 
-    is_webp_supported = "image/webp" in request.headers.get("accept")
+    path = UPLOAD_DIR / content_hash
+    mime_type, _ = mimetypes.guess_type(filename)[0] or "application/octet-stream"
 
+    is_webp_supported = "image/webp" in request.headers.get("accept")
     if is_webp_supported:
-        return FileResponse(
-            UPLOAD_DIR / (content_hash + "_resized"),
-            media_type="image/webp",
-            headers={"Cache-Control": "max-age=31536000"},
-        )
-    else:
-        return FileResponse(
-            UPLOAD_DIR / content_hash,
-            media_type=upload.content_type,
-            headers={"Cache-Control": "max-age=31536000"},
-        )
+        path = UPLOAD_DIR / (content_hash + "_resized")
+        mime_type = "image/webp"
+
+    if not path.exists():
+        raise HTTPException(status_code=404)
+
+    return FileResponse(
+        path,
+        media_type=mime_type,
+        headers={"Cache-Control": "max-age=31536000"},
+    )
 
 
 @app.get("/robots.txt", response_class=PlainTextResponse)
