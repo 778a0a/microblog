@@ -1404,9 +1404,10 @@ async def serve_proxy_media(
     if proxy_resp.status_code >= 300:
         logger.info(f"failed to proxy {url}, got {proxy_resp.status_code}")
         await proxy_resp.aclose()
-        return PlainTextResponse(
-            status_code=proxy_resp.status_code,
-        )
+        # return PlainTextResponse(
+        #     status_code=proxy_resp.status_code,
+        # )
+        return RedirectResponse(url="/static/nopic.png", status_code=302)
 
     return StreamingResponse(
         proxy_resp.aiter_raw(),
