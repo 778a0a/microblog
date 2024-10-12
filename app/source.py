@@ -73,7 +73,7 @@ class CustomRenderer(HTMLRenderer):
         self.mentioned_actors = mentioned_actors
 
     def render_auto_link(self, token: AutoLink) -> str:
-        template = '<a href="{target}" target="_blank" rel="noopener">{inner}</a>'
+        template = '<a href="{target}" target="_blank" rel="noopener noreferrer">{inner}</a>'
         target = self.escape_url(token.target)
         return template.format(target=target, inner=target)
 
