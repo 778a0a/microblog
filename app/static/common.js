@@ -39,7 +39,15 @@ if (fullscreenContainer != null) {
     images.forEach(image => {
         image.addEventListener('click', () => {
             fullscreenImg.src = image.src;
+            fullscreenImg.style.width = "width" in image.dataset ? image.dataset["width"] + "px" : "";
+            fullscreenImg.style.height = "height" in image.dataset ? image.dataset["height"] + "px" : "";
             fullscreenContainer.style.display = 'flex';
+            if (image.src.includes("/thumbnails/")) {
+                setTimeout(() => {
+                    const fullSrc = image.src.replace("/thumbnails/", "/");
+                    fullscreenImg.src = fullSrc;
+                });
+            }
         });
     });
     fullscreenContainer.addEventListener('click', () => {
