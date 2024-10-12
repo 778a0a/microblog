@@ -24,14 +24,15 @@
 <div class="admin-menu">
 <nav class="flexbox">
     <ul>
-        <li>{{ admin_link("index", "Public") }}</li>
+        {% if total_count %}<li>{{ admin_link("index", "Public(" + total_count + ")" ) }}</li>{% endif %}
+        {% if not total_count %}<li>{{ admin_link("index", "Public") }}</li>{% endif %}
         <li>{{ admin_link("admin_new", "New") }}</li>
         <li>{{ admin_link("admin_stream", "Stream") }}</li>
         <li>{{ admin_link("admin_inbox", "Inbox") }} / {{ admin_link("admin_outbox", "Outbox") }}</li>
         <li>{{ admin_link("admin_direct_messages", "DMs") }}</li>
-        <li>{{ admin_link("get_notifications", "Notifications") }} {% if notifications_count %}({{ notifications_count }}){% endif %}</li>
-        <li>{{ admin_link("get_lookup", "Lookup") }}</li>
-        <li>{{ admin_link("admin_bookmarks", "Bookmarks") }}</li>
+        <li><small>{{ admin_link("get_notifications", "Notifications") }} {% if notifications_count %}({{ notifications_count }}){% endif %}</small></li>
+        <li><small>{{ admin_link("get_lookup", "Lookup") }}</small></li>
+        <li><small>{{ admin_link("admin_bookmarks", "Bookmarks") }}</small></li>
         <li><a href="{{ url_for("logout")}}">Logout</a></li>
     </ul>
 </nav>

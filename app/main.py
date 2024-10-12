@@ -337,6 +337,7 @@ async def index(
             "current_page": page,
             "has_next_page": page_offset + len(outbox_objects) < total_count,
             "has_previous_page": page > 1,
+            "total_count": str(total_count),
         },
     )
 
