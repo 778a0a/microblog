@@ -5,8 +5,11 @@ from app.config import BASE_URL
 from app.config import hmac_sha256
 
 SUPPORTED_RESIZE = [50, 740]
-EXPIRY_PERIOD = 86400
-EXPIRY_LENGTH = 7
+# EXPIRY_PERIOD = 86400
+# EXPIRY_LENGTH = 7
+# nginxでキャッシュしやすくするために大幅に伸ばします。
+EXPIRY_PERIOD = 86400 * 365 * 2
+EXPIRY_LENGTH = 1
 
 
 class InvalidProxySignatureError(Exception):
