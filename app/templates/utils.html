@@ -568,17 +568,20 @@
         </a></p>
     {% endif %}
 
-    {% if object.ap_type == "Article" %}
+    {% if object.ap_type == "Article" and is_object_page %}
         <time class="dt-published muted article-top-date" datetime="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}" title="{{ object.ap_published_at.replace(microsecond=0).isoformat() }}">
             <a href="{{ object.url }}"{% if object.is_from_inbox %} rel="nofollow"{% endif %} class="object-permalink u-url u-uid">{{ object.ap_published_at | datejst }}</a>
         </time>
     {% endif %}
 
-    {% if object.ap_type in ["Article", "Event"] %}
-        <h2 class="p-name article-title">{{ object.name }}</h2>
-    {% endif %}
-
-    {% if object.ap_type == "Event" %}
+    {% if object.ap_type == "Article" %}
+        {% if is_object_page %}
+            <h2 class="p-name article-title">{{ object.name }}</h2>
+        {% else %}
+            <h2 class="p-name article-title article-preview"><a href="{{ object.url }}" class="u-url u-uid">{{ object.name }}</a></h2>
+            {% set skip_content = True %}
+        {% endif %}
+    {% elif object.ap_type == "Event" %}
         {% if object.ap_object.get("endTime") and object.ap_object.get("startTime") %}
             <p>On {{ object.ap_object.startTime | parse_datetime | format_date }}
             (ends {{ object.ap_object.endTime | parse_datetime | format_date }})</p>
@@ -610,9 +613,11 @@
         </summary>
     {% endif %}
         <div class="obj-content">
+        {% if not skip_content %}
         <div class="e-content">
             {{ object.content | clean_html(object) | safe }}
         </div>
+    {% endif %}
 
     {% if object.ap_type == "Question" %}
         {% set can_vote = is_admin and object.is_from_inbox and not object.is_poll_ended and not object.voted_for_answers %}

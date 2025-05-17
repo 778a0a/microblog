@@ -113,6 +113,9 @@ code {
 
 .article-title {
     margin-top: 10px;
+    &.article-preview {
+        margin-bottom: 15px;
+    }
 }
 
 blockquote {
